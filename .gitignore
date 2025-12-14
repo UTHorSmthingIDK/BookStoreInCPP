@@ -1,0 +1,18 @@
+# executables
+*.exe
+
+# object files
+*.o
+*.obj
+
+# temp / build
+build/
+bin/
+
+# editor junk
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
