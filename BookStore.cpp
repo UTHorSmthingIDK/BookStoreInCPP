@@ -24,11 +24,12 @@ int main()
     <<"\t\t██████╔╝╚██████╔╝╚██████╔╝██║  ██╗███████║   ██║   ╚██████╔╝██║  ██║███████╗\n"
     <<"\t\t╚═════╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝\n\n" << Color::RESET;
     cout <<Color::BGREEN<< "\tPress enter to continue" <<Color::RESET<< std::endl;
-    char c = std::cin.get();
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    BookStore bookstore;
+    char c = cin.get();
     while (true)
     {
         choice = welcome(count++);
-        BookStore bookstore;
         switch (choice)
         {
         case 1:
@@ -374,7 +375,7 @@ void Author::getInput(int numAuthors)
     }
     this->setName(firstName);
     this->setSurname(surName);
-    this->setWriterId(numAuthors + 1);
+    this->setWriterId(numAuthors);
     int numBooks = Book::readBookTxt(bList);
     if (numBooks == -1)
     {
@@ -419,6 +420,10 @@ vector<int> Writes::findId(int id)
     return pos;
 }
 
+//void Author::searchAuthorRecord(){
+    
+//}
+
 void Author::createAuthorTxt()
 {
     std::ofstream create(File::AUTHOR);
@@ -453,9 +458,8 @@ int Author::readAuthorTxt(list<Author> &authorList)
         cout << Color::RED << "the file had nothing inside" << Color::RESET << std::endl;
         return -2;
     }
-    int pos = line.find_first_of('\n');
-    line.erase(pos);
-    line.erase(pos - 1);
+    line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
+    line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
     try
     {
         size = stoi(line);
@@ -478,9 +482,8 @@ int Author::readAuthorTxt(list<Author> &authorList)
     {
 
         getline(inputFile, line);
-        pos = line.find_first_of('\n');
-        line.erase(pos);
-        line.erase(pos - 1);
+        line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
+        line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
         try
         {
             num = std::stoi(line);
@@ -496,21 +499,18 @@ int Author::readAuthorTxt(list<Author> &authorList)
         author.setWriterId(num);
 
         getline(inputFile, line);
-        pos = line.find_first_of('\n');
-        line.erase(pos);
-        line.erase(pos - 1);
+        line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
+        line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
         author.setSurname(line);
 
         getline(inputFile, line);
-        pos = line.find_first_of('\n');
-        line.erase(pos);
-        line.erase(pos - 1);
+        line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
+        line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
         author.setName(line);
 
         getline(inputFile, line);
-        pos = line.find_first_of('\n');
-        line.erase(pos);
-        line.erase(pos - 1);
+        line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
+        line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
         try
         {
             num = std::stoi(line);
@@ -570,11 +570,10 @@ int Book::readBookTxt(list<Book> &bookList)
     if (!getline(inputFile, line))
     {
         cout << Color::RED << "the file had nothing inside" << Color::RESET << std::endl;
-        return -2;
+        return -1;
     }
-    int pos = line.find_first_of('\n');
-    line.erase(pos);
-    line.erase(pos - 1);
+    line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
+    line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
     try
     {
         size = stoi(line);
@@ -599,15 +598,13 @@ int Book::readBookTxt(list<Book> &bookList)
     {
 
         getline(inputFile, line);
-        pos = line.find_first_of('\n');
-        line.erase(pos);
-        line.erase(pos - 1);
+        line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
+        line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
         book.setTitle(line);
 
         getline(inputFile, line);
-        pos = line.find_first_of('\n');
-        line.erase(pos);
-        line.erase(pos - 1);
+        line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
+        line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
         try
         {
             day = stoi(line.substr(0, 2));
@@ -650,9 +647,8 @@ int Book::readBookTxt(list<Book> &bookList)
         book.setRDate(d);
 
         getline(inputFile, line);
-        pos = line.find_first_of('\n');
-        line.erase(pos);
-        line.erase(pos - 1);
+        line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
+        line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
         auto pos = b.find('.');
         if (pos == string::npos)
             std::cerr << "error" << std::endl;
@@ -728,9 +724,8 @@ int Writes::readWritesTxt(list<Writes> &writesList)
         cout << Color::RED << "the file had nothing inside" << Color::RESET << std::endl;
         return -2;
     }
-    int pos = line.find_first_of('\n');
-    line.erase(pos);
-    line.erase(pos - 1);
+    line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
+    line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
     size = stoi(line);
     if (!size)
     {
@@ -742,15 +737,13 @@ int Writes::readWritesTxt(list<Writes> &writesList)
     {
 
         getline(inputFile, line);
-        pos = line.find_first_of('\n');
-        line.erase(pos);
-        line.erase(pos - 1);
+        line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
+        line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
         writes.setTitle(line);
 
         getline(inputFile, line);
-        pos = line.find_first_of('\n');
-        line.erase(pos);
-        line.erase(pos - 1);
+        line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
+        line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
         writes.setWriterId(stoi(line));
 
         writesList.push_back(writes);

@@ -4,6 +4,7 @@
 #include <vector>
 #include <limits>
 #include <stdexcept>
+#include <algorithm>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -210,6 +211,8 @@ public:
     static void createAuthorTxt();
 
     void getInput(int numAuthors);
+
+    //static void Author::searchAuthorRecord();
 
     // more functions to come
 
