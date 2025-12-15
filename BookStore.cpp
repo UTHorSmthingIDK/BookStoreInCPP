@@ -283,7 +283,7 @@ void Book::getInput(int numBooks, int mode)
         }
         euro.setIntegerPart(stoi(b));
         int pos = e.find_first_of('.');
-        b = split(e, e.at(e.size()), pos);
+        b = split(e, e.at(e.size() - 1), pos);
         if (b == "")
         {
             cout << Color::RED << "there was a mistake" << Color::RESET << std::endl;
